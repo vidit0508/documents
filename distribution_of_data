@@ -1,0 +1,160 @@
+DISTRIBUTION OF DATA
+
+Why we need data distribution?
+1. Scalability
+2. Availability
+3. Latency
+
+
+How is data distributed across machine?
+1. Replication
+    1. In this same data is present on multiple machines
+    2. Increase availability of data.
+    3. Improves latency.
+    4. Reads redirected to replicas
+    5. Handle huge reads
+    6. Redundancy as same data is available on multiple machines
+2. Partition
+    1. It is good to implement when data is too big to fit on single machine
+    2. Smaller db segments
+        1. A-D —> DB1
+        2. E-H —> DB2
+
+How to keep replication in sync?
+Problems: -
+1. Major problem in replication is syncing between database might takes some time to update current state.
+2. What if replica fails over?
+3. What if a leader fails over?
+4. In multi leader how to handle conflicts?
+5. What exactly is the replication logs? What it contains?
+
+
+Replication can be executed in three ways: -
+1. Single Leader
+    1. Data replication between leader and followers can be done in two ways
+        1. Synchronous way
+            1. In this user will get the response only when the data has been updated to leader as well as all the followers,
+        2. Asynchronous way
+            1. In this user will get the response once the data has been updated in the leader and data will be send to update in followers in the background.
+            2. It is fast.
+2. Multi Leader
+3. Leaderless
+
+
+Single Leader Replication
+Synchronous Replication: -
+Pros
+1. Latest data is always present on followers.
+2. Even in leader is down, data still persists in followers.
+Cons
+1. If any followers crashes or network fails, then WRITE operation to DB FAILS.
+2. Leader has to wait until all followers come back again.
+
+Asynchronous Replication: -
+Pros
+1. Writes are fast.
+2. Generally, < 1 sec replication log
+Cons
+1. Followers may fall behind leader
+2. Stale reads
+3. If leader crashes and not recoverable, then data loss is there if not replicated.
+4. Write may not be durable.
+
+How to add new followers?
+1. Take snapshot of leader. (There are tools for this)
+    1. Snapshots must have sequence number in the leaders replication log for reference to get new updates after that reference number.
+2. Copy snapshot to new follower.
+3. Follower asks for data updates till now.
+4. After this follower continues receiving further updates via leader.
+
+What if follower goes down?
+1. Each follower keeps log of data changes received via leader
+2. When followers is up again, then it should know the last transaction processed.
+3. Ask leader for data changes since that point.
+4. Continue like other replicas.
+
+What if leader goes down?
+1. There must be leader failover detection mechanism like heartbeat which can notify if leader goes down.
+2. Now the replica which contains the latest changes will be promoted as new leader.
+3. Reconfigure the writes to new leader.
+4. When old leader comes up then it should recognise itself and follower and recognise the new leader and start accepting the updates from new leader.
+
+Problems with leader failover?
+1. If we have implemented asynchronous replication then data loss will be there.
+2. When old leaders goes down and some the writes has not been replicated to followers then in that case we basically discards those writes as to avoid conflicts and keeping system in sync but in this data loss is there for those writes which has not been replicated.
+3. SPLIT BRAIN -> this problem happens when old leader comes up and starts behaving like leader again then writes will be done on both leader which can arise data conflicts.
+4. How leader timeout is set? the time after which it needs to be acknowledged that leader is down.
+
+How does replication log works?
+1. Statement Based 
+    1. It stores query for insert, update and delete.
+    2. One problem here is what if these statements using functions like now() or rand() then these values will be different. In later version, these functions will get replaced by actual values.
+2. Write Ahead log
+    1. LSM trees -> stored in log segments
+    2. B-Trees -> stored WAL logs
+    3. These are append only log
+    4. Postgres and Oracle use this
+    5. Cons - WAL is very low level
+    6. Tough to have different versions of DB on leader + followers
+    7. Upgrade needs downtime
+3. Logical row based
+    1. Different log format what database uses
+    2. It contains changes as per the change like insert, update and delete.
+    3. Upgrades are easier.
+    4. Can be passed to analytics pipeline.
+4. Trigger based
+    1. Database provides a mechanism trigger, which will trigger the code which you want to execute when some changes has been done in database.
+    2. Log into a new table which external process can read.
+    3. Database for oracle and Bucardo for Postgres is using this technique.
+
+
+Multi Leader Replication
+
+1. When we are operating in multiple geographies ->then we should have leader in each geography.
+2. Also if we have single leader for all the geographies then we might not have write conflicts but we surely have latency issue a lot.
+3. In multi leader data replication, leader One not only keeps sync with its followers but also keep sync with the Leader Two of other geography, and visa versa same for leader two. So, we can say that replication is also happening between leaders which will follow down to their followers.
+
+Pros of Multi leader replication
+1. Network latency improves.
+2. Many DBs implement this technique by default. 
+
+Problems
+1. If user changes the title value to ‘A’ and it get updated in leader One, other user changes the title to ‘B’ and this gets updated in leader two. So, at the time when leader replicates data themselves then this conflict will be detected.
+    1. This problem can be solved in multiple ways - (all these happens at row level)
+        1. If we maintains the timestamp then entry with higher timestamps will win.
+        2. Merge values —> this will stores both values with separation.
+        3. There is one more way, where conflicts get recorded and application code asks the user to resolve the conflict. (Couch DB)
+
+Multi Leader Replication Topologies
+1. Circular replication
+2. Star replication
+    1. Has single point of failure.
+3. All to All replication
+
+Problem with All to All replication
+1. Suppose user update the value in leader 1, but this took some time to get replicated to leader 3 and after some duration user again updates the value and that value get updated in leader 4 and this values gets updated in leader 3 before then the leader 1 value. So here conflicts arises. (Its like we got the answer before quesation)
+    1. This problem can be solved using version vectors. So, when ever new values then we tag a new version with that value and latest version will win.
+
+LEADERLESS REPLICATION
+
+1. Used by Amazon Dynamo, Cassandra and Voldemort.
+2. Clients directly write to replicas.
+3. In this suppose, user updated the value then that write request will be send to all the replicas, and any of the replica is down even then value will gets updated even if one replica is up. Now, at the time of read, values will be fetched from all the replicas and then by some mechanism latest value will be decided and send to the user and in background stale data of other replicas will be updated with new value.
+
+How many writes and read should be successful to maintain durability
+We have N replicas
+W writes are successful
+
+How many reads needs to be certain?
+Suppose R node from which reads are successful
+
+N - R < W (At least one machine is there on which we perform read)
+
+Better tolerance
+Better availability
+
+
+
+
+
+
