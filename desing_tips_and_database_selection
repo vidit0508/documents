@@ -1,0 +1,141 @@
+Desing Tips and Database selection
+
+Factors on which database selection depends
+1. Do we have structured data to store or non structured data to store.
+2. What query pattern do we have.
+3. Amount of scale needed. 
+
+Caching
+ Redis can be used for caching.
+
+File Storage
+When ever we need to store image or videos then we need blob storage and for this we can use ‘amazon S3’ along with this we need a CDN (Content Delivery Network) to deliver images and videos to multiple geographies
+
+Text Search Engine
+For this we can use elastic search and solr and both are build up on apache Lucene
+
+	Fuzzy Text Search
+	Means if user want to search for airport but mistakenly typed airprot then these type of changes is know 		as fuzzy changes.
+
+Elastic search and solar both are search engines with datasource but they don’t gurantee any durability of data that means data can be lost. So, the case is we should load the data in any of the system to provide the search capability from these engines.
+
+Timeseries Databases
+These databases are made for specific scenarios like graphana, prometheus where data is stored sequentially in append only mode where first entry at T1 and second entry at T2 the T2 > T1, also on these databases we don’t do random read or update also here we search data for time periods. Some of the such databases are influx db, Open TS Db etc.
+
+
+When we want to store large amount of data at single place for analysis, then we need data warehouses, then we can use Hadoop.
+
+How to decide whether to got with relational database or non relational database
+Structured data means something which can be translated to tables or entities.
+
+1. If YES we have structured data
+    1. Do we need ACID. If YES
+        1. Then use RDBMS like Postgres, MYSQL, Oracle
+    2. If we don’t need ACID. If NOT
+        1. We can still use SQL or No-SQL database.
+2. If NOT, mean we do not have structured data
+    1. IF YES, we need to do lots of queries on data with whole lot of attributes
+        1. If we have lots of data with lots of attributes like amazon product catalog where shirt can be prodcuct with whole other set of attributes and we have refrigerator as a product with whole other set of attributes, along with this we have to do queries on these attributes then should use Document DB like Mongo DB or Couch Base
+    2. IF YES, We have finite queries and ever increasing data, then
+        1. Example uber driver keep sending their location data continuously, then this data keep on increasing. Like Cassandra or HBase.
+
+
+The one type of database is not sufficient for all the scenarios. For example take the example of amazon
+Where we need ACID properties where multiple user want to purchase the product at a same time but only one packet is left. So, we need RDBMS DB for inventory and order where only one user should be able to commit and just placed the order and once the data is delivered then we can move that delivered order to Cassandra Db.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
