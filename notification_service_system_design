@@ -1,0 +1,12 @@
+Notification Service System Design
+
+Functional Requirement
+1. Able to send notification
+2. Pluggable -> feature should be extendable like SMS, email and I future should be able to have In-App Notification.
+3. Should be build as SAAS product, to check who is sending how many notifications and it will be possible for us to rate limit which is needed when we expose notification service to multiple service.
+4. Prioritisation of messages. Like OTP is of high priority and promotional message is of low priority.
+
+
+Non-Functional Requirement
+1. High available.
+2. Many clients.
