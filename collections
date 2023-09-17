@@ -1,0 +1,161 @@
+Popular collcetion Types: -
+
+	•	List
+	•	Set
+	•	Map
+
+Benefits of using java collections: -
+	•	High performance implementations.
+	•	Improves code reusability and maintainability.
+	•	Offers good “preset” data structures. Eg - List, set, map duque etc.
+
+Collection framework: -
+	•	Core interface (Eg: List)
+	•	Specific Implementations (Eg: ArrayList)
+	•	Abstract Implementation (Eg: AbstractList)
+	•	Concurrent Implementation (Eg: ConcurrentHashMap)
+	•	Algorithms (Eg: BinarySearch)
+	•	Utilities (Eg: Arrays)
+
+Collection Interfaces: -
+	•	Collection
+	•	Map
+
+Java.util.Collection: -
+It is generic interface.
+
+Types of Collections: -
+	•	Index based retrieval collections. (Eg: ArrayList)
+	•	Immutable collections. 
+	•	Order based retrieval collections. 
+
+Collection Interface: -
+	•	Contains all of the common methods: -
+	⁃	size
+	⁃	isEmpty
+	⁃	contains
+	⁃	iterator
+	⁃	toArray
+	⁃	add
+	⁃	addAll
+	⁃	remove
+	⁃	removeAll
+	⁃	containsAll
+	⁃	addAll
+	⁃	clear
+	⁃	equals
+	•	Every collection implements Iterator pattern.
+	•	Have constructors for creating a collection.
+	•	Have adding objects.
+	•	Have removing objects.
+	•	check if objects exists
+	•	convert to array.
+	•	clearing the whole collection.
+
+Equality and Equals Method:- 
+Eg: of Reference Equality
+
+Person p1 = new Person();
+Person p2 = new Person();
+
+Boolean isEqual = p1 == p2; false
+
+Object class has method ‘equals’ using this we can provide our own implementation.
+
+Equals method: -
+	•	used to check object equality.
+	•	default implementation check memory address.
+	•	can be overridden to provide custom implementation.
+	•	should be based on state that matters. (Like id and name in person class)
+
+Rules for equality method: -
+	•	Reflexivity
+	⁃	an object should be equal to itself
+	⁃	Point p1 = new Point(1, 2);
+	⁃	p1.equals(p2) // should be true
+	•	Symmetry
+	⁃	if x is equal to y, then y should also be equal to x.
+	⁃	Point p1 = new Point(1, 2);
+	⁃	Point p1 = new Point(1, 2);
+	⁃	p1.equals(p2) // is true
+	⁃	p2.equals(p1) // then this should be true also
+	•	Transitivity
+	⁃	if x is equal to y and y is equal to z, then x should also be equal to z.
+	⁃	Point p1 = new Point(1, 2);
+	⁃	Point p1 = new Point(1, 2);
+	⁃	Point p1 = new Point(1, 2);
+	⁃	p1.equals(p2) // is true
+	⁃	p2.equals(p3) // true
+	⁃	p1.equals(p3) // then this should be true also
+	•	Consistency
+	⁃	should return the same result unless the state of the object has been modified.
+	⁃	Point p1 = new Point(1, 2);
+	⁃	Point p1 = new Point(1, 2);
+	⁃	p1.equals(p2) // true
+	⁃	p1.x = 2
+	⁃	then p1.equals(p2) // should return false
+	•	Non-nullity
+	⁃	an object should never be considered equal to null
+	⁃	Point p1 = new Point(1, 2);
+	⁃	p1.equals(null); // false
+
+Equals Implementation: -
+	public class Person {
+
+		private String name;
+		private int age;
+
+		// getters and setters
+
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+
+			if (obj == null || getClass() != obj.getClass()) {
+				return false;
+			}
+
+			Person person = (Person) obj;
+			return age == person.age 
+			&& Objects.equals(name, person.name);
+		}	
+
+	}
+
+Hashing and hash codes: -
+The process of mapping data of arbitrary size to fixed-size values or keys, known as hash codes or hash values, that represent the original data in a way that can be easily and quickly looked up.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
