@@ -1,0 +1,32 @@
+How does DNS works?
+Domain Name System (DNS) is the backbone of internet. It translates human-readable domain names, such as google.com to machine-readable IP addresses.
+
+1. When browser makes a DNS query, it.s asking DNS resolver. This DNS resolver could be from our ISP, cloud fare (1.1.1.1) or google dns (8.8.8.8)
+2. IF DNS resolver does not have the answer in cache then it will ask the right authoritative name server and asks it. When we update domain’s DNS records, we are basically updating its authoritative name server.
+3. How does DNS resolver finds the authoritative name server?
+    1. There are three main levels of authoritative DNS servers
+        1. First Level - Root Name servers
+            1. Root name servers stores the IP addresses of the TLD name servers.
+            2. There are 13 logical root name servers which are associated with particular IP addresses.
+            3. There are actually many physical servers behind every IP address.
+            4. We get routed to the one which is closest to us through any cast.
+        2. Second Level - Top Level Domain (TLD) Name servers.
+            1. They basically stores the IP addresses of the authoritative names servers for all the domain under them.
+            2. Example of TLS name like .com, .org and .edu.
+        3. Third Level - Authoritative Name servers.
+            1. The authoritative name servers finally address the query.
+
+
+Let see how typical DNS query works
+
+1. User types google.com in to the browser.
+2. Browser first checks its cache.
+3. IF browser cache has no answer then it makes an operating system call to try and get the answer.
+4. Operating system call most probably has its own cache too And IF answer is not there then reaches out to the DNS resolver.
+5. Now, DNS resolver first check its cache, If answer is not there then
+6. It asks the root name servers
+7. Root name servers responds with list .com TLD name servers.
+8. Then DNS resolver reaches to the .com TLD name servers and .com TLD name servers return the authoritative name servers to google.com 
+9. Then DNS resolvers reaches out to the google.com authoritative name server and it returns the IP address of google.com 
+10. Now DNS resolver returns the IP address to the operating system.
+11. Then it returns to the browser.
