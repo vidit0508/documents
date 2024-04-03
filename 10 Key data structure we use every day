@@ -1,0 +1,42 @@
+1. List
+    1. They good for storing and manipulating ordered data.
+    2. They are useful in applications like task management, social media feeds, user preferences and shopping carts.
+    3. Can be used in twitter feeds to ensure that latest post comes first, or in task management where task can be saved in ordered format.
+    4. Linked List experiences more cache missed as it does not store data in continuous memory location.
+2. Arrays
+    1. They provide fixed-size ordered collection of elements.
+    2. They are good for situations where size of collection is known and does not change frequently.
+    3. Used in image processing where each pixel colour data can be represented in two dimensional array. It enables efficient manipulation and transformation of the image.
+    4. Arrays is contiguous memory storage allows for better cache locality and fewer misses, resulting in improved performance.
+3. Stacks
+    1. It follows LIFO (Last In First Out) principle.
+    2. They are perfect for undo and redo operations in text editors, or maintaining browser history.
+4. Queues
+    1. If follows FIFO (First In First Out) principle.
+    2. They are good for managing printer jobs, sending user actions in games, or handling messages in chat applications.
+    3. A queue can be used to store incoming messages in the order they are received. It ensures that it should displayed to the recipient in correct sequence.
+5. Heaps
+    1. They are used for task scheduling and memory management.
+    2. They helpful in implementing Priority Queues where we need to access the highest or lowest priority item efficiently.
+6. Trees
+    1. It organises data hierarchically.
+    2. They are useful in applications like database indexing, AI decision making and file systems.
+7. Hash Tables
+    1. It allows efficient data lookup, insertion and deletion.
+    2. They use hash function to map key to their corresponding storage locations.
+    3. It enables constants time access to store values.
+    4. It used in search engines, caching systems etc.
+8. Suffix Trees
+    1. They are specialised for searching strings in documents.
+    2. This makes them perfect for text editors and search algorithms.
+    3. In search engine, a suffix tree can be used to efficiently used to locate all the occurrences of the searched term within a large corpus of text.
+9. Graphs
+    1. It’s about tracking relationships or finding paths.
+    2. This makes them invaluable in social media, recommendation engines and path finding algorithms.
+10. R-Trees
+    1. Are good at finding nearest neighbours.
+    2. They are crucial for mapping apps and geolocation services.
+    3. In mapping applications, It can be used to store spatial data, such as points of interest.
+    4. This enables efficient queries to find the nearest locations based on the user’s current position.
+Note
+Cache friendliness means CPU cache is small, fast memory between the main memory (RAM) and the CPU. It stores recently access data and instructions without fetching them from the slower main memory
