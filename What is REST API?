@@ -1,0 +1,39 @@
+Why is RESTful API so popular
+1. It is the most common communication standard between computers over internet.
+2. API stands for Application Programming Interface. It is a way through which two computers talk to each other.
+3. REST stand for REpresentational State Transfer
+4. REST is not a specification.It is a new set of rules that has been the common standard for building the web API since the early 2000.
+5. An API that follows the REST is called RESTful API.
+
+Basic of REST
+1. A restful API organises resource into a set of unique URIs, or Uniform Resource Identifier.
+2. The URI differentiate different types of resources on a server.
+3. The resources are group by noun and not a verb.
+4. The request has a very specific format
+REST Request Example:
+POST /products HTTP/1.1
+Accept:application/json
+
+POST = VERB which tell to server what we want to do.
+/products = resource
+
+REST Response Example:
+HTTP /1.1 200 OK
+
+200 OK = http status code
+
+5. HTTP status code levels
+200 level = success
+400 level = something wrong with our request
+500 level = Some thing wrong at server level
+A well behaved client could choose to retry the failed request with a 500 level status code.
+Client can choose to retry because some actions are not idempotent and those require extra care
+
+6. idempotent
+POST - not idempotent
+GET - idempotent PUT - idempotent DELETE - idempotent
+
+7. A REST implementation should be stateless. It means the two parties don’t need to store any information about each other, and every request and response (cycle) is independent from all others. This leads to web applications that are easy to scale and well behaved.
+8. If API returns huge amount of data then use pagination.
+9. Versioning of API is very important.
+10. Other popular API options like GraphQL and gRPC
