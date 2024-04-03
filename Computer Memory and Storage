@@ -1,0 +1,37 @@
+Type of Memory:-
+1. RAM (Random Access Memory)
+    1. Stores data temporarily while computer is running
+    2. It’s fast and flexible.
+    3. It is volatile - means it will loose data if power is off.
+    4. RAM is multiple type:-
+        1. SRAM (Static Random Access Memory)
+            1. It is fast and expensive type of RAM.
+            2. Used in high speed applications like CPU caches where  quick access time is crucial.
+        2. DRAM (Dynamic Random Access Memory)
+            1. It is slower and cheaper.
+            2. It needs to be constantly refreshed to retain data further making it more high maintanance.
+            3. DRAM is of multiple types further: -
+                1. FPM DRAM - obsolete
+                2. EDO DRAM - obsolete
+                3. SDRAM
+                4. DDR SDRAM - currently below two types are running in market
+                    1. DDR4
+                    2. DDR5
+                5. GDDR SDRAM - 
+                    1. It is specialised type of DRAM optimised for faster data transfer rate which GPU needs for massive parallel processing.
+                    2. GDDR6 is most widely used today.
+2. ROM (Read Only Memory)
+    1. It contains data even when power is off.
+    2. It stores important information which computer needs to boot up
+        1. BIOS
+        2. Firmware
+
+Types of Storage: -
+1. HDD (Hard Disk Drives)
+    1. It has been around for long time.
+    2. They store data on spinning magnetic disks and are known for their large storage capacities at a low price.
+2. SSD (Solid State Drives)
+    1. It used NAND-based flash memory, providing faster data access, reduced power consumption and increased durability compared to HDDs, but come at higher price.
+    2. NVMe or Non Volatile Memory Express is a high performance interface for SSDs that connects directly to CPU via PCIe lanes. This allow lower latency and significantly faster data transfer rates compared to SATA-based SSDs.
+3. USB Drive
+4. SD Card
